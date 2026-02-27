@@ -192,13 +192,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1233816320248459134, guid: f5d408c114d28444c808dc0fe213aba9, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 1515645863541414777, guid: f5d408c114d28444c808dc0fe213aba9, type: 3}
-      propertyPath: m_Radius
-      value: 1.5
+    - target: {fileID: 2912241705020636588, guid: f5d408c114d28444c808dc0fe213aba9, type: 3}
+      propertyPath: debugMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2912241705020636588, guid: f5d408c114d28444c808dc0fe213aba9, type: 3}
       propertyPath: mainCamera
@@ -206,7 +202,15 @@ PrefabInstance:
       objectReference: {fileID: 619419728}
     - target: {fileID: 2912241705020636588, guid: f5d408c114d28444c808dc0fe213aba9, type: 3}
       propertyPath: attackRange
-      value: 1.5
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866555273754400999, guid: f5d408c114d28444c808dc0fe213aba9, type: 3}
+      propertyPath: damagePerHit
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866555273754400999, guid: f5d408c114d28444c808dc0fe213aba9, type: 3}
+      propertyPath: attacksPerSecond
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8874747365608679535, guid: f5d408c114d28444c808dc0fe213aba9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -687,14 +691,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySmall (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 7160123291876902668, guid: 126b4df93fcf697459a37cf59adf100e, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 8369344089754336629, guid: 126b4df93fcf697459a37cf59adf100e, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 558839170}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

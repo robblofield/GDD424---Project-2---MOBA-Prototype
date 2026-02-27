@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 10749480092478458}
   - component: {fileID: 4533654437019073822}
   - component: {fileID: 8369344089754336629}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemySmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ NavMeshAgent:
   m_Acceleration: 2
   avoidancePriority: 50
   m_AngularSpeed: 300
-  m_StoppingDistance: 0.3
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -192,9 +192,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7c6ee1e416f6f41a5766552694c727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  debugMode: 0
   aggroRange: 4
   attackRange: 1.2
+  attackExitBuffer: 0.25
+  attackStopBuffer: 0.1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1001 &5744709127772629176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -207,13 +212,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: DamageZone
       objectReference: {fileID: 0}
+    - target: {fileID: 2019704704442471180, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: debugLogs
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: damagePerHit
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: canDamagePlayer
@@ -225,11 +234,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: attacksPerSecond
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: canDamageEnemies
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
+      propertyPath: validTargets.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3848258301944960056, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: m_LocalPosition.x

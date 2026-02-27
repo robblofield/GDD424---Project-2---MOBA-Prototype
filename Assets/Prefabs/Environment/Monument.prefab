@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8796604977500880040}
   - component: {fileID: 3916880269886439934}
   - component: {fileID: 6573232383713476603}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Monument
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,6 +139,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ff8aadfc684024143ac7a5d93201f3e0, type: 3}
       propertyPath: m_Name
       value: gravestone-cross-large
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ff8aadfc684024143ac7a5d93201f3e0, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
