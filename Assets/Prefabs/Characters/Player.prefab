@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 2912241705020636588}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,6 +150,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   debugLogs: 1
+  invulnerable: 0
+  targetRenderer: {fileID: 3160196161286796206}
+  flashDuration: 0.1
 --- !u!54 &5424264141535089986
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -191,8 +194,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   rayDistance: 500
-  navMeshSampleRadius: 2
-  debugLogs: 0
+  navMeshSampleRadius: 1.2
+  attackRange: 1.5
 --- !u!1001 &8599983116483918030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -208,6 +211,14 @@ PrefabInstance:
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: debugLogs
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
+      propertyPath: damagePerHit
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
+      propertyPath: attacksPerSecond
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3848258301944960056, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: m_LocalPosition.x
@@ -248,6 +259,10 @@ PrefabInstance:
     - target: {fileID: 3848258301944960056, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084691034282419127, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
+      propertyPath: m_Radius
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

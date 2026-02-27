@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 8369344089754336629}
   m_Layer: 0
   m_Name: EnemySmall
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,10 +124,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -334000983
   m_Radius: 0.5
-  m_Speed: 5
-  m_Acceleration: 6
+  m_Speed: 2
+  m_Acceleration: 2
   avoidancePriority: 50
-  m_AngularSpeed: 500
+  m_AngularSpeed: 300
   m_StoppingDistance: 0.3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -150,6 +150,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   debugLogs: 1
+  invulnerable: 0
+  targetRenderer: {fileID: 5349921790645123792}
+  flashDuration: 0.1
 --- !u!54 &4533654437019073822
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -190,8 +193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  aggroRange: 8
-  attackRange: 2.5
+  aggroRange: 4
+  attackRange: 1.2
 --- !u!1001 &5744709127772629176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -209,12 +212,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
+      propertyPath: damagePerHit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: canDamagePlayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: damagePerSecond
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
+      propertyPath: attacksPerSecond
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: canDamageEnemies
@@ -259,6 +270,10 @@ PrefabInstance:
     - target: {fileID: 3848258301944960056, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084691034282419127, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
+      propertyPath: m_Radius
+      value: 1.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
