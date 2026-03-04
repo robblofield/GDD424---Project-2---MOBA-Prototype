@@ -1,37 +1,38 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 50f; // Starting / maximum health
-    [SerializeField] private bool debugLogs = true; // Toggle debug output
-    [SerializeField] private bool invulnerable = false; // If true, ignores all damage
+    [SerializeField] private float maxHealth = 50f; 
+    [SerializeField] private bool debugLogs = true; // [V3] Toggle debug output
+    [SerializeField] private bool invulnerable = false; // [V3] If true, ignores all damage
 
     [Header("Hit Flash")]
-    [SerializeField] private Renderer targetRenderer; // Renderer to flash red when hit
-    [SerializeField] private float flashDuration = 0.1f; // How long the flash lasts
+    [SerializeField] private Renderer targetRenderer; // [V3] Renderer to flash red when hit
+    [SerializeField] private float flashDuration = 0.1f; // [V3] How long the flash lasts
 
-    public float MaxHealth => maxHealth;
-    public float CurrentHealth { get; private set; }
+    public float MaxHealth => maxHealth;  // [V3] "=>" is a shorthand way of making public "Getter" so any script can get the max health
+    public float CurrentHealth { get; private set; } // [V3] updated from regular float to a get/private set
 
-    private Material runtimeMat; // Instance material (so we don't edit shared project materials)
-    private Color originalColor; // Color we revert to after flashing
-    private float flashTimer; // Countdown for the flash effect
+    private Material runtimeMat; // [V3] Instance material (so we don't edit shared project materials)
+    private Color originalColor; // [V3] Color we revert to after flashing
+    private float flashTimer; // [V3] Countdown for the flash effect
 
-    // Simple public setter used by GameManager to lock/unlock the monument
+    // [V3] Simple public setter used by GameManager to lock/unlock the monument
     public void SetInvulnerable(bool value) => invulnerable = value;
 
     private void Awake()
     {
         // Initialise health
-        CurrentHealth = maxHealth;
+        CurrentHealth = maxHealth; // [V3] updated to new `CurrentHealth` not `currentHealth`
 
-        // Try to find a renderer automatically if one isn't assigned
+        // [V3] Try to find a renderer automatically if one isn't assigned
         if (targetRenderer == null)
         {
             targetRenderer = GetComponentInChildren<Renderer>();
         }
 
-        // Cache a runtime material for flashing
+        // [V3] Cache a runtime material for flashing
         if (targetRenderer != null)
         {
             runtimeMat = targetRenderer.material;
@@ -57,15 +58,14 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount) // [V3] changed from single method to overload version which takes an amound and the transform of who hit us
     {
-        // Overload: damage with no attacker info
         if (invulnerable) return;
 
         TakeDamage(amount, null);
     }
 
-    public void TakeDamage(float amount, Transform attacker)
+    public void TakeDamage(float amount, Transform attacker) // [V3] Overload version with 2 arguments
     {
         // Core damage function
         if (invulnerable) return;
@@ -97,7 +97,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    private void Die()
+    private void Die() // [V3] was previously in old TakeDamage(float amount) method
     {
         if (debugLogs)
         {
@@ -108,7 +108,7 @@ public class Health : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void FlashRed()
+    private void FlashRed() // [V3] Flash red when we take damage
     {
         if (runtimeMat == null) return;
         if (!runtimeMat.HasProperty("_Color")) return;
