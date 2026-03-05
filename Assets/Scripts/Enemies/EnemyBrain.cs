@@ -12,10 +12,11 @@ public class EnemyBrain : MonoBehaviour
     private DamageZone damageZone; // Our "hit/hurt" box system
 
     [Header("Combat")]
-    [SerializeField] private float aggroRange = 4f; // How far the enemy will detect/chase the player
+    [SerializeField] private float aggroRange = 4f; // How far the enemy will detect/chase the player [Changed]
     [SerializeField] private float attackRange = 1.2f; // How far we can attack from
     [SerializeField] private float attackExitBuffer = 0.25f; // A small extra distance before we stop attacking.
     [SerializeField] private float attackStopBuffer = 0.1f; // A small offset so the Agent stops inside attackRange.
+
     [SerializeField] private LayerMask playerLayer; // Player layer that identifies our target
     private Transform currentTarget; // The location of a found player
 
@@ -26,7 +27,7 @@ public class EnemyBrain : MonoBehaviour
 
     public EnemyState State { get; private set; } = EnemyState.Idle; // Getter and Setter for states
 
-    private GameManager gm;
+    private GameManager gm; // [Changed] - Game manager is not needed on the player
 
     private void Awake()
     {
@@ -34,11 +35,11 @@ public class EnemyBrain : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         damageZone = GetComponentInChildren<DamageZone>();
 
-        gm = FindFirstObjectByType<GameManager>();
+        gm = FindFirstObjectByType<GameManager>(); //[Changed] cache the game manager
         if (gm != null) gm.RegisterEnemy(this);
 
         // Set scan radius from aggro range (enemy scans to detect, not to attack)
-        scanRadius = aggroRange;
+        scanRadius = aggroRange; // [Changed] same pattern but aggroRange not attackRange
     }
 
     private void Update()
@@ -76,7 +77,7 @@ public class EnemyBrain : MonoBehaviour
                     break;
                 }
 
-                // Give up if player has moved out of aggro range
+                // [Changed] Give up if player has moved out of aggro range 
                 if (Vector3.Distance(transform.position, currentTarget.position) > aggroRange)
                 {
                     currentTarget = null;
@@ -116,7 +117,7 @@ public class EnemyBrain : MonoBehaviour
 
         float dist = Vector3.Distance(transform.position, currentTarget.position);
 
-        // If target leaves aggro, give up completely
+        // [Changed] If target leaves aggro, give up completely
         if (dist > aggroRange)
         {
             damageZone?.SetActive(false);
@@ -203,7 +204,7 @@ public class EnemyBrain : MonoBehaviour
         agent.SetDestination(currentTarget.position);
     }
 
-    private void OnDestroy()
+    private void OnDestroy() // [Changed] remove enemy from the GameManager's list
     {
         if (gm != null) gm.UnregisterEnemy(this);
     }

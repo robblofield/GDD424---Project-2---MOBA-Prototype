@@ -18,12 +18,12 @@ public class PlayerBrain : MonoBehaviour
 
     [Header("Combat")]
     [SerializeField] private float attackRange = 1.8f; // How far we can attack from
-    [SerializeField] private float attackExitBuffer = 0.25f; // A small extra distance before we stop attacking.
-    [SerializeField] private float attackStopBuffer = 0.1f; // A small offset so the Agent stops inside attackRange.
+    [SerializeField] private float attackExitBuffer = 0.25f; // [V3] A small extra distance before we stop attacking.
+    [SerializeField] private float attackStopBuffer = 0.1f; // [V3] A small offset so the Agent stops inside attackRange.
     [SerializeField] private LayerMask enemyLayer; // Enemy layer that identifies our targets
-    private Transform currentTarget; // The location of a found enemy
+    private Transform currentTarget; // [V3] The location of a found enemy
 
-    [Header("Auto Attack")]
+    [Header("Auto Attack")] // [V3]
     private float scanRadius = 2.5f; // How far around the player we search for enemies to automatically target.
     private float scanInterval = 0.2f; // How often (in seconds) we check for nearby enemies
     private float scanTimer = 0f; // A countdown timer that controls when the next enemy scan happens.
@@ -40,7 +40,7 @@ public class PlayerBrain : MonoBehaviour
         damageZone = GetComponentInChildren<DamageZone>();
         if (mainCamera == null) mainCamera = Camera.main;
 
-        // Set scan radius from attack range
+        // [V3] Set scan radius from attack range
         scanRadius = attackRange;
     }
 
@@ -50,7 +50,7 @@ public class PlayerBrain : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
             HandleClick();
 
-        // Auto-acquire targets if not fleeing
+        // [V3] Auto-acquire targets if not fleeing
         if (!isFleeing)
             AutoAcquireTarget();
 
@@ -130,12 +130,12 @@ public class PlayerBrain : MonoBehaviour
 
     private void UpdateAttacking()
     {
-        // Clean dead/removed target
+        // [V3] Clean dead/removed target
         if (currentTarget == null)
         {
             damageZone?.SetActive(false);
 
-            // Stay attacking while ANY enemies in range exist
+            // [V3] Stay attacking while ANY enemies in range exist
             Transform newTarget = (!isFleeing) ? FindNearestEnemyInRange() : null;
             if (newTarget != null)
             {
@@ -149,14 +149,14 @@ public class PlayerBrain : MonoBehaviour
 
         float dist = Vector3.Distance(transform.position, currentTarget.position);
 
-        agent.stoppingDistance = Mathf.Max(0f, attackRange - attackStopBuffer);
+        agent.stoppingDistance = Mathf.Max(0f, attackRange - attackStopBuffer); // [V3] makign our stopping distance a little inside of attack range
 
-        // If target has moved clearly out of range, chase again (unless fleeing)
+        // [V3] If target has moved clearly out of range, chase again (unless fleeing)
         if (dist > attackRange + attackExitBuffer)
         {
             damageZone?.SetActive(false);
 
-            // If there are still enemies in range, switch target; otherwise chase current
+            // [V3] If there are still enemies in range, switch target; otherwise chase current
             if (!isFleeing)
             {
                 Transform inRange = FindNearestEnemyInRange();
@@ -171,10 +171,10 @@ public class PlayerBrain : MonoBehaviour
             return;
         }
 
-        // Close enough to attack
+        // [V3]Close enough to attack
         damageZone?.SetActive(true);
 
-        // If we're "in range" but not actually overlapping the hit zone, step closer.
+        // [V3] If we're "in range" but not actually overlapping the hit zone, step closer.
         if (damageZone != null && !damageZone.HasTargets)
         {
             agent.SetDestination(currentTarget.position);
@@ -184,11 +184,11 @@ public class PlayerBrain : MonoBehaviour
             agent.ResetPath();
         }
 
-        // If target dies, we should keep attacking if other enemies are in range.
-        // We'll handle that next frame via currentTarget == null check (or via Health destroying Transform).
+        // [V3] If target dies, we should keep attacking if other enemies are in range.
+        // [V3] We'll handle that next frame via currentTarget == null check (or via Health destroying Transform).
     }
 
-    private void AutoAcquireTarget() //Find nearest target within range
+    private void AutoAcquireTarget() // [V3] Find nearest target within range
     {
         scanTimer -= Time.deltaTime;
         if (scanTimer > 0f) return;
@@ -206,7 +206,7 @@ public class PlayerBrain : MonoBehaviour
 
     private Transform FindNearestEnemyInRange() // Return the best next in-range target based on their distance
     {
-        float radius = (scanRadius > 0f) ? scanRadius : attackRange;
+        float radius = (scanRadius > 0f) ? scanRadius : attackRange; // [V3] use a scanning radius for finding targets
 
         Collider[] hits = Physics.OverlapSphere(transform.position, radius, enemyLayer);
         if (hits == null || hits.Length == 0) return null;
@@ -240,7 +240,7 @@ public class PlayerBrain : MonoBehaviour
         agent.SetDestination(currentTarget.position);
     }
 
-    // If an enemy hits us, we attack back (unless fleeing)
+    // [V3] If an enemy hits us, we attack back (unless fleeing)
     public void NotifyDamagedBy(Transform attacker)
     {
         if (attacker == null) return;
