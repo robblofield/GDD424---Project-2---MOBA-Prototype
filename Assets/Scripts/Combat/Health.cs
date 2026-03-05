@@ -44,7 +44,7 @@ public class Health : MonoBehaviour
 
     private void Update()
     {
-        // Only run flash logic when we actually have a material and a timer running
+        // [V3] Only run flash logic when we actually have a material and a timer running
         if (runtimeMat == null) return;
         if (flashTimer <= 0f) return;
 
