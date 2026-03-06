@@ -1,38 +1,39 @@
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 50f; 
-    [SerializeField] private bool debugLogs = true; // [V3] Toggle debug output
-    [SerializeField] private bool invulnerable = false; // [V3] If true, ignores all damage
+    [SerializeField] private float maxHealth = 50f;
+    [SerializeField] private bool debugLogs = true;
+    [SerializeField] private bool invulnerable = false;
 
     [Header("Hit Flash")]
-    [SerializeField] private Renderer targetRenderer; // [V3] Renderer to flash red when hit
-    [SerializeField] private float flashDuration = 0.1f; // [V3] How long the flash lasts
+    [SerializeField] private Renderer targetRenderer;
+    [SerializeField] private float flashDuration = 0.1f;
 
-    public float MaxHealth => maxHealth;  // [V3] "=>" is a shorthand way of making public "Getter" so any script can get the max health
-    public float CurrentHealth { get; private set; } // [V3] updated from regular float to a get/private set
+    [Header("UI")]
+    [SerializeField] private bool isMonument = false;
+    [SerializeField] private Vector3 damageNumberOffset = new Vector3(0f, 2f, 0f);
 
-    private Material runtimeMat; // [V3] Instance material (so we don't edit shared project materials)
-    private Color originalColor; // [V3] Color we revert to after flashing
-    private float flashTimer; // [V3] Countdown for the flash effect
+    public float MaxHealth => maxHealth;
+    public float CurrentHealth { get; private set; }
 
-    // [V3] Simple public setter used by GameManager to lock/unlock the monument
+    private Material runtimeMat;
+    private Color originalColor;
+    private float flashTimer;
+
+    private GameUI gameUI;
+
     public void SetInvulnerable(bool value) => invulnerable = value;
 
     private void Awake()
     {
-        // Initialise health
-        CurrentHealth = maxHealth; // [V3] updated to new `CurrentHealth` not `currentHealth`
+        CurrentHealth = maxHealth;
 
-        // [V3] Try to find a renderer automatically if one isn't assigned
         if (targetRenderer == null)
         {
             targetRenderer = GetComponentInChildren<Renderer>();
         }
 
-        // [V3] Cache a runtime material for flashing
         if (targetRenderer != null)
         {
             runtimeMat = targetRenderer.material;
@@ -40,17 +41,17 @@ public class Health : MonoBehaviour
             if (runtimeMat.HasProperty("_Color"))
                 originalColor = runtimeMat.color;
         }
+
+        gameUI = FindFirstObjectByType<GameUI>();
     }
 
     private void Update()
     {
-        // [V3] Only run flash logic when we actually have a material and a timer running
         if (runtimeMat == null) return;
         if (flashTimer <= 0f) return;
 
         flashTimer -= Time.deltaTime;
 
-        // When flash ends, restore original color
         if (flashTimer <= 0f)
         {
             if (runtimeMat.HasProperty("_Color"))
@@ -58,16 +59,14 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float amount) // [V3] changed from single method to overload version which takes an amound and the transform of who hit us
+    public void TakeDamage(float amount)
     {
         if (invulnerable) return;
-
         TakeDamage(amount, null);
     }
 
-    public void TakeDamage(float amount, Transform attacker) // [V3] Overload version with 2 arguments
+    public void TakeDamage(float amount, Transform attacker)
     {
-        // Core damage function
         if (invulnerable) return;
         if (amount <= 0f) return;
         if (CurrentHealth <= 0f) return;
@@ -80,35 +79,41 @@ public class Health : MonoBehaviour
             Debug.Log($"[Health] {name} took {amount:0.0}, now {CurrentHealth:0.0}/{MaxHealth:0.0}", this);
         }
 
-        // Flash feedback
         FlashRed();
 
-        // If this object is the player, allow auto-retaliate when hit
+        if (gameUI != null)
+        {
+            gameUI.SpawnDamageNumber(transform.position + damageNumberOffset, amount);
+        }
+
         PlayerBrain pb = GetComponent<PlayerBrain>();
         if (pb != null && attacker != null)
         {
             pb.NotifyDamagedBy(attacker);
         }
 
-        // If we just hit zero, die
         if (CurrentHealth <= 0f && before > 0f)
         {
             Die();
         }
     }
 
-    private void Die() // [V3] was previously in old TakeDamage(float amount) method
+    private void Die()
     {
         if (debugLogs)
         {
             Debug.Log($"[Health] {name} died", this);
         }
 
-        // Keep it simple for teaching:
+        if (isMonument && gameUI != null)
+        {
+            gameUI.ShowVictory();
+        }
+
         Destroy(gameObject);
     }
 
-    private void FlashRed() // [V3] Flash red when we take damage
+    private void FlashRed()
     {
         if (runtimeMat == null) return;
         if (!runtimeMat.HasProperty("_Color")) return;

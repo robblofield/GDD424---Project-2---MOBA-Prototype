@@ -1,8 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageNumberFloat : MonoBehaviour
 {
-    // Make the text animate floating upwards
+    [SerializeField] private float floatSpeed = 1f;
+    [SerializeField] private float lifetime = 1f;
+
+    private void Update()
+    {
+        transform.position += Vector3.up * floatSpeed * Time.deltaTime;
+        lifetime -= Time.deltaTime;
+
+        if (lifetime <= 0f)
+            Destroy(gameObject);
+    }
 }

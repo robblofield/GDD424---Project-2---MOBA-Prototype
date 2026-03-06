@@ -1,25 +1,93 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameUI : MonoBehaviour
 {
-    // Hold all references to UI TextMeshPro Field we need to update at runtime
+    [Header("Static UI")]
+    [SerializeField] private TMP_Text startPromptText;
+    [SerializeField] private TMP_Text enemiesRemainingText;
+    [SerializeField] private TMP_Text monumentPromptText;
+    [SerializeField] private TMP_Text victoryText;
 
+    [Header("Damage Numbers")]
+    [SerializeField] private GameObject damageNumberPrefab;
+    [SerializeField] private Canvas worldCanvas;
+    [SerializeField] private Vector3 damageNumberOffset = new Vector3(0f, 2f, 0f);
 
+    private void Start()
+    {
+        HideStartPrompt();
+        HideMonumentPrompt();
+        HideVictory();
+    }
 
-    // At start hide all progression messages
+    public void ShowStartPrompt()
+    {
+        if (startPromptText != null)
+            startPromptText.gameObject.SetActive(true);
+    }
 
+    public void HideStartPrompt()
+    {
+        if (startPromptText != null)
+            startPromptText.gameObject.SetActive(false);
+    }
 
+    public void ShowEnemiesRemaining()
+    {
+        if (enemiesRemainingText != null)
+            enemiesRemainingText.gameObject.SetActive(true);
+    }
 
-    // Hold all "Show Message" public methods - for `GameManager.cs` to call
+    public void HideEnemiesRemaining()
+    {
+        if (enemiesRemainingText != null)
+            enemiesRemainingText.gameObject.SetActive(false);
+    }
 
-    // Hold all "Hide Message" public methods - for `GameManager.cs` to call
+    public void UpdateEnemiesRemaining(int count)
+    {
+        if (enemiesRemainingText != null)
+            enemiesRemainingText.text = $"Enemies Remaining: {count}";
+    }
 
+    public void ShowMonumentPrompt()
+    {
+        if (monumentPromptText != null)
+            monumentPromptText.gameObject.SetActive(true);
+    }
 
+    public void HideMonumentPrompt()
+    {
+        if (monumentPromptText != null)
+            monumentPromptText.gameObject.SetActive(false);
+    }
 
-    // Hold public method to update how many enemies are remaining - for `GameManager.cs` to call
+    public void ShowVictory()
+    {
+        if (victoryText != null)
+            victoryText.gameObject.SetActive(true);
+    }
 
+    public void HideVictory()
+    {
+        if (victoryText != null)
+            victoryText.gameObject.SetActive(false);
+    }
 
-    // Hold public method to spawn Damage Numbers - for `Health.cs` to call
+    public void SpawnDamageNumber(Vector3 worldPosition, float amount)
+    {
+        if (damageNumberPrefab == null || worldCanvas == null) return;
+
+        GameObject instance = Instantiate(
+            damageNumberPrefab,
+            worldPosition + damageNumberOffset,
+            Quaternion.identity,
+            worldCanvas.transform
+        );
+
+        TMP_Text tmp = instance.GetComponentInChildren<TMP_Text>();
+        if (tmp != null)
+            tmp.text = $"-{amount:0}";
+    }
 }
