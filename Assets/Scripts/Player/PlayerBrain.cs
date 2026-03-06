@@ -28,6 +28,9 @@ public class PlayerBrain : MonoBehaviour
     private float scanInterval = 0.2f; // How often (in seconds) we check for nearby enemies
     private float scanTimer = 0f; // A countdown timer that controls when the next enemy scan happens.
 
+    [Header("Animation Settings")] // [V4]
+    [SerializeField] private Animator animator;
+
 
     private bool isFleeing = false; // Flee means: player clicked ground to move away, so ignore auto-attack
 
@@ -42,6 +45,10 @@ public class PlayerBrain : MonoBehaviour
 
         // [V3] Set scan radius from attack range
         scanRadius = attackRange;
+
+        // [V4] hook up animation of awake
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -60,6 +67,7 @@ public class PlayerBrain : MonoBehaviour
             case PlayerState.Idle:
                 damageZone?.SetActive(false);
                 agent.stoppingDistance = 0f;
+                animator.SetBool("isMoving", false); //[V4]
 
                 // if enemy is in range, start attacking
                 if (!isFleeing && currentTarget == null)
@@ -75,6 +83,7 @@ public class PlayerBrain : MonoBehaviour
             case PlayerState.Moving:
                 damageZone?.SetActive(false);
                 agent.stoppingDistance = 0f;
+                animator.SetBool("isMoving", true); //[V4]
 
                 if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
                 {

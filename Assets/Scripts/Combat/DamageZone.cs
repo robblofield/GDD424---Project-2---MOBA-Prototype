@@ -22,6 +22,9 @@ public class DamageZone : MonoBehaviour
     public bool HasTargets => targetsInZone.Count > 0;
     public float Radius => sphere != null ? sphere.radius : 0f;
 
+    [Header("Animation Settings")] // [V4]
+    [SerializeField] private Animator animator;
+
     private void Awake()
     {
         // Setup trigger collider
@@ -30,6 +33,12 @@ public class DamageZone : MonoBehaviour
 
         // [V3] using a method rather than setting directly
         SetActive(false);
+
+        // [V4] Find animator on child object from shared parent 
+        if (animator == null)
+        {
+            animator = gameObject.transform.root.GetComponentInChildren<Animator>();
+        }
     }
 
     private void Update()
@@ -43,6 +52,10 @@ public class DamageZone : MonoBehaviour
         // [V3] Countdown to next hit
         hitTimer -= Time.deltaTime;
         if (hitTimer > 0f) return;
+
+        // [V4] Trigger attack animation
+        if (animator != null)
+            animator.SetTrigger("Attack");
 
         // [V3] Deal damage to everything currently overlapping
         if (targetsInZone.Count > 0)
