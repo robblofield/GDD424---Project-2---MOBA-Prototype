@@ -158,7 +158,17 @@ public class PlayerBrain : MonoBehaviour
 
         float dist = Vector3.Distance(transform.position, currentTarget.position);
 
-        agent.stoppingDistance = Mathf.Max(0f, attackRange - attackStopBuffer); // [V3] makign our stopping distance a little inside of attack range
+        agent.stoppingDistance = Mathf.Max(0f, attackRange - attackStopBuffer); // [V3] making our stopping distance a little inside of attack range
+
+        // [V4] Rotate toward current target while attacking
+        Vector3 direction = currentTarget.position - transform.position;
+        direction.y = 0f;
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+        }
 
         // [V3] If target has moved clearly out of range, chase again (unless fleeing)
         if (dist > attackRange + attackExitBuffer)
@@ -180,7 +190,7 @@ public class PlayerBrain : MonoBehaviour
             return;
         }
 
-        // [V3]Close enough to attack
+        // [V3] Close enough to attack
         damageZone?.SetActive(true);
 
         // [V3] If we're "in range" but not actually overlapping the hit zone, step closer.
@@ -247,6 +257,7 @@ public class PlayerBrain : MonoBehaviour
         State = PlayerState.Attacking;
 
         agent.SetDestination(currentTarget.position);
+        
     }
 
     // [V3] If an enemy hits us, we attack back (unless fleeing)

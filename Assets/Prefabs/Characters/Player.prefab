@@ -50,11 +50,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ffe7897f55689a41a61f348a0600698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 0
+  debugMode: 1
   mainCamera: {fileID: 0}
   rayDistance: 500
   navMeshSampleRadius: 1.2
-  attackRange: 1.5
+  attackRange: 1.6
   attackExitBuffer: 0.25
   attackStopBuffer: 0.1
   enemyLayer:
@@ -75,11 +75,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   debugLogs: 1
-  invulnerable: 0
+  invulnerable: 1
   targetRenderer: {fileID: 0}
   flashDuration: 0.1
   isMonument: 0
   damageNumberOffset: {x: 0, y: 2, z: 0}
+  damageNumberColor: {r: 0.94716984, g: 0.87229455, b: 0.52719826, a: 1}
+  animator: {fileID: 0}
 --- !u!195 &3351106373341912996
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -294,9 +296,33 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5017971254852617305, guid: f0401ab1db74dc14a8f3c3ccf920a545, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f0401ab1db74dc14a8f3c3ccf920a545, type: 3}
       propertyPath: m_Name
       value: character-keeper
+      objectReference: {fileID: 0}
+    - target: {fileID: 1492312403021943278, guid: f0401ab1db74dc14a8f3c3ccf920a545, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.000079095036
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812433027226884373, guid: f0401ab1db74dc14a8f3c3ccf920a545, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.000000002299115
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436805663696350335, guid: f0401ab1db74dc14a8f3c3ccf920a545, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7604367576434143486, guid: f0401ab1db74dc14a8f3c3ccf920a545, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.000079095036
+      objectReference: {fileID: 0}
+    - target: {fileID: 8891244130364874969, guid: f0401ab1db74dc14a8f3c3ccf920a545, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -308,6 +334,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f0401ab1db74dc14a8f3c3ccf920a545, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5985918243240241991}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f0401ab1db74dc14a8f3c3ccf920a545, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8580810343605892817}
   m_SourcePrefab: {fileID: 100100000, guid: f0401ab1db74dc14a8f3c3ccf920a545, type: 3}
 --- !u!4 &1714386493964625941 stripped
 Transform:
@@ -341,6 +370,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8580810343605892817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6949014449237587357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e755d2be31df7b74c8e377ca8f68a39e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7720308298681724711 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f0401ab1db74dc14a8f3c3ccf920a545, type: 3}
@@ -368,11 +409,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: damagePerHit
-      value: 20
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: attacksPerSecond
-      value: 2.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3805608930081382441, guid: 9682706d85aac844285aee93ab7bc172, type: 3}
       propertyPath: validTargets.m_Bits

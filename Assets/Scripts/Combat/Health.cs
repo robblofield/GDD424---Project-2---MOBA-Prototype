@@ -12,7 +12,11 @@ public class Health : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private bool isMonument = false;
-    [SerializeField] private Vector3 damageNumberOffset = new Vector3(0f, 2f, 0f);
+    [SerializeField] private Vector3 damageNumberOffset = new Vector3(0f, 1f, 0f);
+    [SerializeField] private Color damageNumberColor = Color.red;
+
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
 
     public float MaxHealth => maxHealth;
     public float CurrentHealth { get; private set; }
@@ -43,6 +47,12 @@ public class Health : MonoBehaviour
         }
 
         gameUI = FindFirstObjectByType<GameUI>();
+
+        // Find the animator on the child object
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
     }
 
     private void Update()
@@ -83,7 +93,7 @@ public class Health : MonoBehaviour
 
         if (gameUI != null)
         {
-            gameUI.SpawnDamageNumber(transform.position + damageNumberOffset, amount);
+            gameUI.SpawnDamageNumber(transform.position + damageNumberOffset, amount, damageNumberColor);
         }
 
         PlayerBrain pb = GetComponent<PlayerBrain>();
@@ -110,7 +120,14 @@ public class Health : MonoBehaviour
             gameUI.ShowVictory();
         }
 
-        Destroy(gameObject);
+        if (animator != null)
+        {
+            animator.SetTrigger("Die");
+        }
+
+        else
+            Destroy(gameObject);
+        
     }
 
     private void FlashRed()
@@ -121,4 +138,5 @@ public class Health : MonoBehaviour
         runtimeMat.color = Color.red;
         flashTimer = flashDuration;
     }
+
 }

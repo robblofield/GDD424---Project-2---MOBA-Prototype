@@ -25,6 +25,9 @@ public class EnemyBrain : MonoBehaviour
     private float scanInterval = 0.2f; // How often (in seconds) we check for nearby targets
     private float scanTimer = 0f; // A countdown timer that controls when the next scan happens.
 
+    [Header("Animations")]
+    [SerializeField] private Animator animator;
+
     public EnemyState State { get; private set; } = EnemyState.Idle; // Getter and Setter for states
 
     private GameManager gm; // [Changed] - Game manager is not needed on the player
@@ -40,6 +43,11 @@ public class EnemyBrain : MonoBehaviour
 
         // Set scan radius from aggro range (enemy scans to detect, not to attack)
         scanRadius = aggroRange; // [Changed] same pattern but aggroRange not attackRange
+
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
     }
 
     private void Update()
@@ -53,6 +61,7 @@ public class EnemyBrain : MonoBehaviour
             case EnemyState.Idle:
                 damageZone?.SetActive(false);
                 agent.stoppingDistance = 0f;
+                animator.SetBool("isMoving", false); // Add animation call
 
                 // if player is in range, start attacking/chasing
                 if (currentTarget == null)
@@ -68,6 +77,7 @@ public class EnemyBrain : MonoBehaviour
             case EnemyState.Moving:
                 damageZone?.SetActive(false);
                 agent.stoppingDistance = 0f;
+                animator.SetBool("isMoving", true); // Add animation call
 
                 // If target disappeared/died, go idle
                 if (currentTarget == null)

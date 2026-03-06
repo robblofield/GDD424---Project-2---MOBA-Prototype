@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 333552832772621851}
   - component: {fileID: 8779045529466670791}
   - component: {fileID: 1607746311427153062}
+  - component: {fileID: 4875448230087729910}
   m_Layer: 5
   m_Name: DamageNumbersCanvas
   m_TagString: Untagged
@@ -115,6 +116,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b69c1689113ec4c9539848cac8dd37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4875448230087729910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4909206589332930890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9c11d632c41054a90401388ef42026, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatSpeed: 1
+  lifetime: 1
 --- !u!1 &5070567544692890783
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +141,6 @@ GameObject:
   - component: {fileID: 5582130770394265731}
   - component: {fileID: 1150702109420832700}
   - component: {fileID: 4244587658254065283}
-  - component: {fileID: 4517735051654832959}
   m_Layer: 5
   m_Name: DamageNumber
   m_TagString: Untagged
@@ -148,11 +162,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6998941690547535075}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 2}
   m_SizeDelta: {x: 200, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &1150702109420832700
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -216,7 +230,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -252,17 +266,3 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &4517735051654832959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5070567544692890783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c9c11d632c41054a90401388ef42026, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  floatSpeed: 1
-  lifetime: 1

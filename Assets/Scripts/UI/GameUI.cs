@@ -75,7 +75,7 @@ public class GameUI : MonoBehaviour
             victoryText.gameObject.SetActive(false);
     }
 
-    public void SpawnDamageNumber(Vector3 worldPosition, float amount)
+    public void SpawnDamageNumber(Vector3 worldPosition, float amount, Color color)
     {
         if (damageNumberPrefab == null || worldCanvas == null) return;
 
@@ -89,5 +89,6 @@ public class GameUI : MonoBehaviour
         TMP_Text tmp = instance.GetComponentInChildren<TMP_Text>();
         if (tmp != null)
             tmp.text = $"-{amount:0}";
+            tmp.color = color;
     }
 }
